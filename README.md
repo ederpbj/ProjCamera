@@ -38,81 +38,33 @@ git::https://github.com/ederpbj/ProjetoCamera.git
     npm install react-native-camera
     react-native link react-native-camera
 
->Alterar no build.gradle
+>Tutorial não funciona
 
-    //Importado A01-Mod18A
-    maven{ url "https://jitpack.io" }
+    https://blog.rocketseat.com.br/react-native-camera/
+    
+    
+>Camera comunity
 
+    https://www.npmjs.com/package/react-native-camera
 
-    //Busca biblioteca, se não tiver multiplex usa v26.1.0
-    subprojects {
-        project.configuration.all{
-            resolutionStrategy.eachDependency { details -> 
-                if(details.requested.group == 'com.android.suport' && 
-                    !details.requested.name.contains('multidex')){
+>Autolink
 
-                    details.useVersion "26.1.0"
-                }
-            }
-        }
+    yarn add react-native-webview
+
+    yarn react-native run-android
+
+>build.gandle app
+
+    defaultConfig {
+        ...
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
 
+>Permissões
 
->Alterar gradle-wrapper.properties
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-all.zip
-    por
-    distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip
-
->Alterar versão do build.gradle
-
-
->Alterar MainApplication.java
-
-    @Override
-    protected List<ReactPackage> getPackages() {
-      @SuppressWarnings("UnnecessaryLocalVariable")
-      List<ReactPackage> packages = new PackageList(this).getPackages();
-      // Packages that cannot be autolinked yet can be added manually here, for example:
-      // packages.add(new MyReactNativePackage());
-       packages.add(new MainReactPackage());
-       packages.add(new RNCameraPackage());
-      return packages;
-    }
-
-
->Alterações para IOS
-
->Permissões em Info.plist
-
-    <key>NSCameraUsageDescription</key>
-	<string>Este app quer usar sua camera</string>
-
-    <key>NSPhotoLibraryUsageDescription</key>
-	<string>Este app quer usar sua biblioteca de fotos</string>
-
->Desfazer link
-
-    react-native unlink react-native-camera
-
-
->Corrigindo
-
-    I'm using 0.59.0-rc.3
-
-    and solved by these steps:
-
-    In gradle-wrapper.properties
-    change distributionUrl to distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.1-all.zip
-    and in root build.gradle file change gradle classpath to this: classpath 'com.android.tools.build:gradle:3.3.0'
-    Copy file 'metro.config.js' in 0.59-stable/template to your project.
-    Remove node_modules, yarn install, and run-android again.
-    (And make sure version of metro in package.json "metro-react-native-babel-preset": "0.51.0" is the same with current metro's version)
-
->Instalar node_modules
-
-    yarn install
-
->In app build.gradle, add a second line of missingDimensionStrategy :
-
-    missingDimensionStrategy "react-native-camera", "general"
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
